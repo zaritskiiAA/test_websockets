@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+    {% block title %}
+    Запрос на ws.
+    {% endblock %}
+    
+    {% block content %}
+    <form id="form_data" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" id="text" type="text" name='data' placeholder="Введите название файла.">
+        <button class="btn-outline-success.my-2 my-sm-0" type="submit">Отправить запрос</button>
+    </form>
+    <h5 id='pre_ans'></h5>
+    <h5 id='user_send_data'></h5>
+    {% endblock %}
+    
+    {% block scripts %}
+    <script>
+        // Создаем экземпляр WebSocket
+        const socket = new WebSocket("ws://localhost:8000/ws/send_file/");
+    
+        socket.addEventListener('open', (event) => {
+            document.getElementById('pre_ans').innerHTML = "WebSocket соединение установлено.";
+        });
+    
+        // socket.addEventListener('message', (event) => {
+           // console.log("Получено сообщение от сервера:", event.data);
+       // });
+    
+        document.getElementById('form_data').addEventListener('submit', function(e) {
+            e.preventDefault();
+    
+            const inputElement = document.getElementById('text');
+            if (inputElement) {
+                const dataToSend = inputElement.value;
+                document.getElementById('user_send_data').innerHTML = "Запрос принят. Имитируем процесс обработки видео."
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send(dataToSend);
+                } else {
+                    console.error("WebSocket соединение закрыто");
+                }
+            }
+        });
+    </script>
+    {% endblock %}

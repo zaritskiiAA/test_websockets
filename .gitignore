@@ -1,0 +1,6 @@
+# venv modules
+.venv/
+
+# sql modules
+db.sqlite3
+
