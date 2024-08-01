@@ -1,6 +1,11 @@
-# venv modules
+# venv dirs
 .venv/
 
 # sql modules
 db.sqlite3
 
+# cache dir
+__pycache__/
+
+# media root
+media/
