@@ -20,11 +20,8 @@
         socket.addEventListener('open', (event) => {
             document.getElementById('pre_ans').innerHTML = "WebSocket соединение установлено.";
         });
-    
-        // socket.addEventListener('message', (event) => {
-           // console.log("Получено сообщение от сервера:", event.data);
-       // });
-    
+        
+        // Перехватываем форму
         document.getElementById('form_data').addEventListener('submit', function(e) {
             e.preventDefault();
     
@@ -39,5 +36,13 @@
                 }
             }
         });
+
+        socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            document.getElementById('pre_ans').innerHTML = data.message;
+            if (data.message.includes('Ссылка на ресурс')) {
+                document.getElementById('user_send_data').innerHTML = "WebSocket соединение закрыто.";
+            }
+        };
     </script>
     {% endblock %}
